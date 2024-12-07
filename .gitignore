@@ -1,162 +1,64 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# Quadratic Equation solver 
+import tkinter as tk
+from tkinter import messagebox
+import math
 
-# C extensions
-*.so
+# Function to solve the quadratic equation
+def solve_quadratic():
+    try:
+        # Get the values from the input fields
+        a = float(entry_a.get())
+        b = float(entry_b.get())
+        c = float(entry_c.get())
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+        # Ensure 'a' is not zero
+        if a == 0:
+            messagebox.showerror("Error", "'a' cannot be 0. This is not a quadratic equation.")
+            return
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+        # Calculate the discriminant
+        discriminant = b**2 - 4*a*c
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+        # Check and display the roots based on the discriminant
+        if discriminant > 0:
+            root1 = (-b + math.sqrt(discriminant)) / (2 * a)
+            root2 = (-b - math.sqrt(discriminant)) / (2 * a)
+            result_label.config(text=f"Roots are: {root1:.2f}, {root2:.2f}")
+        elif discriminant == 0:
+            root = -b / (2 * a)
+            result_label.config(text=f"Root is: {root:.2f}")
+        else:
+            real = -b / (2 * a)
+            imag = math.sqrt(-discriminant) / (2 * a)
+            result_label.config(text=f"Roots are: {real:.2f} + {imag:.2f}i, {real:.2f} - {imag:.2f}i")
+    except ValueError:
+        messagebox.showerror("Error", "Please enter numbers only.")
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+# Create the main window
+root = tk.Tk()
+root.title("Simple Quadratic Solver")
 
-# Translations
-*.mo
-*.pot
+# Input fields
+tk.Label(root, text="Enter a:").grid(row=0, column=0, padx=5, pady=5)
+entry_a = tk.Entry(root)
+entry_a.grid(row=0, column=1, padx=5, pady=5)
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+tk.Label(root, text="Enter b:").grid(row=1, column=0, padx=5, pady=5)
+entry_b = tk.Entry(root)
+entry_b.grid(row=1, column=1, padx=5, pady=5)
 
-# Flask stuff:
-instance/
-.webassets-cache
+tk.Label(root, text="Enter c:").grid(row=2, column=0, padx=5, pady=5)
+entry_c = tk.Entry(root)
+entry_c.grid(row=2, column=1, padx=5, pady=5)
 
-# Scrapy stuff:
-.scrapy
+# Solve button
+solve_button = tk.Button(root, text="Solve", command=solve_quadratic)
+solve_button.grid(row=3, column=0, columnspan=2, pady=10)
 
-# Sphinx documentation
-docs/_build/
+# Result label
+result_label = tk.Label(root, text="", fg="blue")
+result_label.grid(row=4, column=0, columnspan=2, pady=5)
 
-# PyBuilder
-.pybuilder/
-target/
+# Run the application
+root.mainloop()
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
